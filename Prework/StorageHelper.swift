@@ -22,4 +22,24 @@ struct StorageHelper {
     static func getNightMode() -> Bool{
         return UserDefaults.standard.bool(forKey: "nightMode")
     }
+    
+    static func setBillAmount(billAmount: Double) {
+        UserDefaults.standard.set(billAmount, forKey: "billAmount")
+        
+        let timestamp = NSDate().timeIntervalSince1970 * 1000
+        UserDefaults.standard.set(timestamp, forKey: "timestamp")
+    }
+    
+    static func getBillAmount() -> Double {
+        let timestamp = UserDefaults.standard.double(forKey: "timestamp")
+        let currentTimestamp = NSDate().timeIntervalSince1970 * 1000
+        let difference = (currentTimestamp - timestamp) / 3600
+        if(difference > 600) {
+            UserDefaults.standard.set(0, forKey: "billAmount")
+        }
+        
+        return UserDefaults.standard.double(forKey: "billAmount")
+    }
+    
+    
 }

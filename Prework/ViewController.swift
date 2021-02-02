@@ -35,7 +35,6 @@ class ViewController: UIViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,8 +42,11 @@ class ViewController: UIViewController {
         
         hideKeyboardWhenTappedAround()
         
+        self.billAmount = StorageHelper.getBillAmount()
+        
         billAmountTextField.keyboardType = .decimalPad
         billAmountTextField.clearButtonMode = .whileEditing
+        billAmountTextField.text = String(format: "%.2f", self.billAmount)
         
         billAmountTextField.addTarget(self, action: #selector(ViewController.textFieldDidChange(_:)), for: .editingChanged)
         rateSlider.addTarget(self, action: #selector(ViewController.sliderDidChange(_:)), for: .valueChanged)
@@ -73,6 +75,7 @@ class ViewController: UIViewController {
     @objc func textFieldDidChange(_ textField: UITextField) {
         if let billAmount = textField.text {
             self.billAmount = Double(billAmount) ?? 0
+            StorageHelper.setBillAmount(billAmount: self.billAmount)
         }
     }
 
