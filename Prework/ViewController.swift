@@ -40,8 +40,6 @@ class ViewController: UIViewController {
         
         self.title = "Tip Calculator"
         
-        hideKeyboardWhenTappedAround()
-        
         self.billAmount = StorageHelper.getBillAmount()
         
         billAmountTextField.keyboardType = .decimalPad
@@ -54,8 +52,11 @@ class ViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         defaultRate = StorageHelper.getDefaultRate()
         self.rateSlider.value = Float(self.rate)
+        
+        billAmountTextField.becomeFirstResponder()
         
         overrideUserInterfaceStyle = StorageHelper.getNightMode() ? .dark : .light
     }
@@ -84,16 +85,6 @@ class ViewController: UIViewController {
         UIView.animate(withDuration: 0.3, animations: {
             self.rateSlider.setValue(Float(self.rate), animated:true)
         })
-    }
-    
-    private func hideKeyboardWhenTappedAround() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-    }
-    
-    @objc func dismissKeyboard() {
-        view.endEditing(true)
     }
 }
 

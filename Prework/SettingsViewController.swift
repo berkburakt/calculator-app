@@ -31,7 +31,7 @@ class SettingsViewController: UIViewController {
         
         rateTextField.keyboardType = .decimalPad
         rateTextField.clearButtonMode = .whileEditing
-        rateTextField.text = String(StorageHelper.getDefaultRate() * 100)
+        rateTextField.text = String(format: "%.2f", StorageHelper.getDefaultRate() * 100)
         
         nightModeSwitch.onTintColor = .systemBlue
     }
@@ -51,7 +51,7 @@ class SettingsViewController: UIViewController {
     }
     
     private func hideKeyboardWhenTappedAround() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(SettingsViewController.dismissKeyboard))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
